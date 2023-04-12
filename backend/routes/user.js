@@ -20,7 +20,7 @@ router.get('/get', (req, res) => {
 
 router.post('/createUser', async (req, res) => {
     let { username, email, password, mobileNo, college, branch, semester } = req.body
-console.log(email,password)
+    console.log(email, password)
 
     let user = await User.findOne({ email })
     if (user) {
@@ -267,58 +267,99 @@ router.post('/isLogged', async (req, res) => {
 })
 
 //API to login a user with email and password
-router.post('/userLogin', async (req, res) => {
+// router.post('/userLogin', async (req, res) => {
+//     let { email, password } = req.body;
+//     console.log(req.body)
+//     let user = await User.find({ email: email })
+//     console.log(user)
+//     if (user) {
+//         bcrypt.compare(password, user.password, function (err, result) {
+//             if (result) {
+//                 console.log(result)
+//                 var access_token = jwt.sign({ userId: user._id, email: email }, 'sparkz', { expiresIn: "1h" });
+//                 res.cookie('access_Token', access_token, {
+//                     httpOnly: true
+//                 });
+//                 const { password, ...userInfo } = user._doc
+//                 console.log(userInfo, access_token)
+//                 return res.status(200).json({
+//                     statusCode: 200,
+//                     status: "success",
+//                     message: "Logged in successfully!",
+//                     data: userInfo,
+//                     accessToken: access_token,
+//                 })
+//                 if (err) {
+//                     return res.status(500).json({
+//                         statusCode: 500,
+//                         status: 'failed',
+//                         error: true
+//                     })
+//                 }
+//             }
+//         })
+//     }
+// });
+
+//
+router.post('/loginUser', async (req, res) => {
     let { email, password } = req.body;
-    console.log(req.body)
-    let user = await User.find({ email: email })
-    console.log('hi', user)
+    let user = await User.findOne({ email })
     if (user) {
         bcrypt.compare(password, user.password, function (err, result) {
             if (result) {
-                console.log(result)
+                console.log('result', result)
                 var access_token = jwt.sign({ userId: user._id, email: email }, 'sparkz', { expiresIn: "1h" });
                 res.cookie('access_Token', access_token, {
                     httpOnly: true
                 });
                 const { password, ...userInfo } = user._doc
-                console.log(userInfo,access_token)
-               return res.status(200).json({
+                console.log(userInfo, access_token)
+                return res.status(200).json({
                     statusCode: 200,
                     status: "success",
                     message: "Logged in successfully!",
                     data: userInfo,
                     accessToken: access_token,
                 })
-                if (err) {
-                    return res.status(500).json({
-                        statusCode: 500,
-                        status: 'failed',
-                        error: true
-                    })
-                }
+            } else {
+                console.log(err)
+                return res.status(200).json({
+                    statusCode: 200,
+                    status: "failed",
+                    message: "Password missmatch",
+                })
             }
         })
+
+    } else {
+        return res.status(200).json({
+            status: "failed",
+            error: true,
+            message:'Account not found!'
+        })
     }
-});
+
+})
 
 //API to get user details
 router.post('/getUser', async (req, res) => {
     const { userId } = req.body;
-const user = await User.findOne({_id:userId});
-console.log(user)
+    const user = await User.findOne({ _id: userId });
+    console.log(user)
 
-if(!user){
-    return res.status(403).json({
-        status:"false",
-        error:'user not found'
+    if (!user) {
+        return res.status(403).json({
+            status: "false",
+            error: 'user not found'
+        })
+    }
+
+    const { password, ...userInfo } = user._doc
+    return res.status(200).json({
+        status: "success",
+        data: userInfo
     })
-}
-
-const {password,...userInfo} = user._doc
-return res.status(200).json({
-    status:"success",
-    data:userInfo
-})
 
 })
 

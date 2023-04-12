@@ -22,7 +22,7 @@ const Login = ({ user ,getReload}) => {
 
     const createUser = async () => {
         console.log('loginuser API called')
-        axios.post('https://sparks-production-d365.up.railway.app/users/userLogin', {
+        axios.post('https://sparks-production-d365.up.railway.app/users/loginUser', {
             email, password
         }).then((res) => {
             console.log('first', res.data.data)
