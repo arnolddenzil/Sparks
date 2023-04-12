@@ -90,7 +90,6 @@ const Events = ({ user }) => {
         }
     }, [user])
 
-    console.log('first', datas.cse)
     return (
         <Stack p={2} direction='column' gap={2}>
             <Stack>

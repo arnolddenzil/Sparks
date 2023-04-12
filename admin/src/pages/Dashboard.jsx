@@ -22,10 +22,8 @@ const Dashboard = () => {
         Authorization:"Bearer "+token
       }
     }).then((res)=>{
-      console.log(res.data)
       setUser(res.data.data)
     }).catch((err)=>{
-      console.log(err)
     })
   }
 

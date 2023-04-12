@@ -9,22 +9,20 @@ import { useEffect } from 'react';
 
 const Login = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
  const navigate = useNavigate()
 
   const handleLogin = (data) => {
-    console.log(data);
+
     axios.post(process.env.REACT_APP_API_URL + 'users/login', {
       username, password
     }).then((res) => {
-      console.log(res.data.accessToken)
       navigate('/')
       Cookies.set('auth_token',res.data.accessToken)
     }).catch((err) => {
-      console.log(err)
+
     })
   }
 

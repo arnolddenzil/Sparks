@@ -33,7 +33,6 @@ const SingleEvent = ({ user }) => {
 
   const location = useLocation();
   const eventDetails = location?.state
-  console.log('hey', eventDetails)
 
   const backgroundImageUrls = [
     bg,
@@ -86,11 +85,9 @@ const SingleEvent = ({ user }) => {
     axios.post('http://localhost:5000/users/eventRegister', {
       registeredBy, eventName: eventDetails.title, eventDep: params.event
     }).then((res) => {
-      console.log(res)
       setRegistered(true)
       isRegistered()
     }).catch((err) => {
-      console.log(err)
     })
   }
 
@@ -98,12 +95,10 @@ const SingleEvent = ({ user }) => {
     axios.post('https://sparks-production-d365.up.railway.app/users/isRegistereEvent', {
       registeredBy, eventName: eventDetails?.title
     }).then((res) => {
-      console.log(res.data.resCode)
       if (res.data.resCode === 204) {
         setRegistered(true)
       }
     }).catch((err) => {
-      console.log(err)
     })
   }
 
@@ -117,6 +112,7 @@ const SingleEvent = ({ user }) => {
 
   const handleButtonClick = () => {
     window.location.href = eventDetails?.gform
+    window.open(eventDetails?.gform, "_blank");
   };
 
   return (
@@ -154,7 +150,7 @@ const SingleEvent = ({ user }) => {
                 </Stack>
                 <Stack justifyContent='center' alignItems='center' gap={2}>
                   {/* <Box width='300px' component='img' src={register} /> */}
-                  {registered ?
+                  {/* {registered ?
                     <Button sx={{
                       backgroundColor: 'blue', height: '50px', width: '100%',
                       "&:hover": {
@@ -185,7 +181,7 @@ const SingleEvent = ({ user }) => {
                       }} >
                         REGISTER {eventDetails?.reg_fees}/-
                       </Typography>
-                    </Button>}
+                    </Button>} */}
                   {eventDetails?.gform &&
                     <Button onClick={handleButtonClick} sx={{
                       backgroundColor: 'red', height: '50px', width: '100%',
@@ -195,10 +191,10 @@ const SingleEvent = ({ user }) => {
                     }}>
                       <Typography sx={{
                         fontFamily: 'Kelly Slab',
-                        fontSize: '13px',
+                        fontSize: '18px',
                         fontWeight: '700',
                       }} >
-                        Please fill this form to complete registration.
+                        Register 
                       </Typography>
                     </Button>}
                 </Stack>
@@ -413,7 +409,6 @@ const SingleEvent = ({ user }) => {
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#999 #fff',
                   }} className='rules' p={1} direction='column' height='110px' overflow='auto'>
-                    {console.log(eventDetails?.rules)}
                     {eventDetails?.rules && eventDetails?.rules.map((rule, index) => (
                       <Stack key={index} direction='row' gap={1}>
                         <Stack>
@@ -526,7 +521,7 @@ const SingleEvent = ({ user }) => {
                 <Box height='400px' width='100%' component='img' src={eventDetails?.posterImg} />
               </Stack>
               <Stack justifyContent='center' alignItems='center' mt={1} gap={2}>
-                {registered ?
+                {/* {registered ?
                   <Button sx={{
                     backgroundColor: 'blue', height: '43px', width: '100%',
                     "&:hover": {
@@ -558,7 +553,7 @@ const SingleEvent = ({ user }) => {
                       REGISTER {eventDetails?.reg_fees}/-
                     </Typography>
                   </Button>
-                }
+                } */}
                 {eventDetails?.gform &&
                   <Button onClick={handleButtonClick} sx={{
                     backgroundColor: 'red', height: '50px', width: '100%',
@@ -568,10 +563,10 @@ const SingleEvent = ({ user }) => {
                   }}>
                     <Typography sx={{
                       fontFamily: 'Kelly Slab',
-                      fontSize: '11px',
+                      fontSize: '15px',
                       fontWeight: '700',
                     }} >
-                      Please fill this form to complete registration.
+                    Register
                     </Typography>
                   </Button>}
               </Stack>

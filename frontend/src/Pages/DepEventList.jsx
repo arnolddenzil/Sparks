@@ -63,8 +63,6 @@ const DepEventList = ({ user }) => {
     const params = useParams()
     const navigate = useNavigate()
 
-    console.log(params.event)
-
     useEffect(() => {
         if (params.event === "cse") {
             setEventDatas(events.cse)
@@ -100,7 +98,6 @@ const DepEventList = ({ user }) => {
         }
     }, [])
 
-    console.log('cse', eventDatas)
     return (
         <Stack>
             <Stack sx={{
@@ -142,7 +139,7 @@ const DepEventList = ({ user }) => {
 
                                         <Grid item xs={4} sm={4} md={4} >
 
-                                            {console.log(eventData.id)}
+                                          
                                             <motion.div  >
 
                                                 <Box

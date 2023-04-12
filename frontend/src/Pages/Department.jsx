@@ -56,7 +56,7 @@ const Department = ({user}) => {
         navigate(`/${data}`)
     }
 
-    console.log(location.pathname)
+
     return (
         <Stack sx={{ overflowX: 'hidden' }}>
             <Stack>

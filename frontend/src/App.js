@@ -1,7 +1,7 @@
 import { Stack, ThemeProvider, createTheme } from "@mui/material";
 import MainPage from "./Pages/MainPage";
 import CssBaseline from '@mui/material/CssBaseline';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Department from "./Pages/Department";
 import DepEventList from "./Pages/DepEventList";
 import SingleEvent from "./Pages/SingleEvent";
@@ -51,22 +51,19 @@ function App() {
   const userId  = Cookies.get('userId')
 
 
-const getUserDetails = () => {
-  axios.post('https://sparks-production-d365.up.railway.app/users/getUser',{
-    userId
-  }).then((res)=>{
-    setUser(res.data.data)
-    console.log(res.data)
-    Cookies.set('userId',res.data._id)   
-  }).catch((err)=>{
-    console.log(err)
-  })
-}
-console.log(user)
+// const getUserDetails = () => {
+//   axios.post('https://sparks-production-d365.up.railway.app/users/getUser',{
+//     userId
+//   }).then((res)=>{
+//     setUser(res.data.data)
+//     Cookies.set('userId',res.data._id)   
+//   }).catch((err)=>{
+//   })
+// }
 
-useEffect(() => {
-  getUserDetails()
-}, [reload]);
+// useEffect(() => {
+//   getUserDetails()
+// }, [reload]);
 
 
 const getReload = (data) =>{
@@ -77,7 +74,7 @@ return (
 
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/" element={
 
@@ -163,7 +160,7 @@ return (
             </motion.div>
           } />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </ThemeProvider>
 
   );

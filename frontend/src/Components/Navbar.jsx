@@ -12,32 +12,19 @@ import { auth, googleAuthProvider } from '../Firebase/Firebase'
 import Cookies from 'js-cookie'
 
 
-const Navbar = ({ hideComponent, user }) => {
+const Navbar = ({ hideComponent }) => {
 
     const location = useLocation();
     const [showLogo, setShowLogo] = useState(false);
-    const [showEvents, setShowEvents] = useState(true)
-    const [imgUrl, setImgUrl] = useState(user?.picture)
-    const [userData, setUserData] = useState(user)
 
-    const axiosInstance = 'https://sparks-production-d365.up.railway.app'
+    
 
 
-    const googleAuth = (data) => {
-        window.open(
-            `http://sparks-production-d365.up.railway.app/auth/google/callback`,
-            "_self"
-        );
-    };
 
 
     useEffect(() => {
         if (location.pathname !== '/') {
             setShowLogo(true)
-            setShowEvents(false)
-        }
-        if (location.pathname === '/dev-connect') {
-            setShowEvents(true)
         }
     }, [])
 
@@ -50,11 +37,6 @@ const Navbar = ({ hideComponent, user }) => {
         });
     };
 
-    const logout = () => {
-       user(null)
-        Cookies.remove('auth_token')
-        Cookies.remove('userId')
-    };
 
     return (
         <motion.div
@@ -68,8 +50,6 @@ const Navbar = ({ hideComponent, user }) => {
             }} p={4} height='80px' position='fixed' display='flex' flexDirection='row' justifyContent='space-between'>
 
                 <Stack sx={{ display: { sm: 'none', xs: 'flex' } }}>
-                    {showEvents
-                        ?
                         <Typography onClick={() => navigate('/branch')} sx={{
                             fontFamily: 'Kelly Slab',
                             fontSize: '13px',
@@ -77,36 +57,16 @@ const Navbar = ({ hideComponent, user }) => {
                             zIndex: 1,
                             cursor: 'pointer',
                         }}>EVENTS</Typography>
-                        :
-                        <Typography onClick={handleScrollToBottom} sx={{
-                            fontFamily: 'Kelly Slab',
-                            fontSize: '13px',
-                            fontWeight: '600',
-                            zIndex: 1,
-                            cursor: 'pointer',
-
-                        }}>CONNECT US</Typography>
-                    }
                 </Stack>
                 <Stack>
-                    {showEvents ? <Typography onClick={() => navigate('/branch')} sx={{
+                 <Typography onClick={() => navigate('/branch')} sx={{
                         fontFamily: 'Kelly Slab',
                         fontSize: '23px',
                         fontWeight: '600',
                         zIndex: 1,
                         cursor: 'pointer',
                         display: { xs: 'none', sm: 'block' }
-                    }}>EVENTS</Typography>
-                        :
-                        <Typography onClick={handleScrollToBottom} sx={{
-                            fontFamily: 'Kelly Slab',
-                            fontSize: '23px',
-                            fontWeight: '600',
-                            zIndex: 1,
-                            cursor: 'pointer',
-                            display: { xs: 'none', sm: 'block' }
-                        }}>CONNECT US</Typography>
-                    }
+                    }}>EVENTS</Typography>                                      
                 </Stack>
                 {showLogo &&
                     <>
@@ -118,49 +78,34 @@ const Navbar = ({ hideComponent, user }) => {
                                     transition={{ duration: 1 }}
                                 >
                                     <Stack mt={6}>
-                                        <Box mr={2} onClick={() => navigate('/')} sx={{ cursor: 'pointer', height: { sm: '110px', xs: '100px' }, width: { xs: '100px', sm: '110px' } }} width='150px' component='img' src={logo} />
+                                        <Box  onClick={() => navigate('/')} sx={{ cursor: 'pointer', height: { sm: '110px', xs: '100px' }, width: { xs: '100px', sm: '110px' },ml:{xs:7,sm:10} }} width='150px' component='img' src={logo} />
                                     </Stack>
                                 </motion.div>
                             </Stack>
                         }
                     </>
                 }
-                {!user ?
-                    <>
+
                         <Stack>
-                            <Typography onClick={
-                                () => navigate('/login')
-                            } sx={{
-                                fontFamily: 'Kelly Slab',
-                                fontSize: '23px',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                display: { xs: 'none', sm: 'block' }
-                            }}>SIGN IN</Typography>
-                        </Stack>
-                        <Stack sx={{ display: { sm: 'none', xs: 'flex' } }}>
-                            <Typography onClick={() => navigate('/login')} sx={{
-                                fontFamily: 'Kelly Slab',
-                                fontSize: '13px',
-                                fontWeight: '300',
-                                zIndex: 1,
-                                cursor: 'pointer',
-                            }}>SIGNIN</Typography>
-                        </Stack>
-                    </>
-                    :
-                    <Stack sx={{ display: { sm: 'flex', xs: 'flex' } }} direction='row' justifyContent='center' alignItems='center' gap={1}>
-                        <Typography onclick={logout} sx={{
+                        <Typography onClick={handleScrollToBottom} sx={{
                             fontFamily: 'Kelly Slab',
-                            fontSize: { sm: '23px', xs: '13px' },
-                            fontWeight: '300',
+                            fontSize: '23px',
+                            fontWeight: '600',
                             zIndex: 1,
                             cursor: 'pointer',
-                        }}>{user?.username.slice(0, 9)}</Typography>
-                        {/* <Box sx={{height:'35px',width:'35px',borderRadius:'50%',display:{xs:'none',sm:'flex'}}} component='img' src={imgUrl}/> */}
-                    </Stack>
-                }
-
+                            display: { xs: 'none', sm: 'block' }
+                        }}>CONNECT US</Typography>
+                        </Stack>
+                        <Stack sx={{ display: { sm: 'none', xs: 'flex' } }}>
+                        <Typography onClick={handleScrollToBottom} sx={{
+                            fontFamily: 'Kelly Slab',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            zIndex: 1,
+                            cursor: 'pointer',
+                            display: { xs: 'flex', sm: 'none' }
+                        }}>CONNECT US</Typography>
+                        </Stack>
             </Stack>
         </motion.div>
     )
